@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    public GameObject bullet;
+    //public GameObject bullet;
     void Start()
     {
         StartCoroutine(enemyShoot());
@@ -15,7 +15,18 @@ public class EnemyBehaviour : MonoBehaviour
         do
         {
             yield return new WaitForSeconds(1);
-            Instantiate(bullet, transform);
+            eShoot();
         } while (true);
+    }
+
+    public void eShoot()
+    {
+        GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject();
+        if (bullet != null)
+        {
+            bullet.transform.position = this.transform.position;
+            bullet.transform.rotation = this.transform.rotation;
+            bullet.SetActive(true);
+        }
     }
 }

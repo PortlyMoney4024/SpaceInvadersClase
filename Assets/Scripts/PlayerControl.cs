@@ -25,7 +25,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
             //Mando llamar el GM y sus funciones publicas desde cualquier script
             GameManager.sharedInstance.TakeDamage();
         }
