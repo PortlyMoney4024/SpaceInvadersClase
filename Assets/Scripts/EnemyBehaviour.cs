@@ -21,6 +21,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void eShoot()
     {
+        //Esta función toma el objeto desactivado disponible
+        //Para utilizarlo al gusto
         GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject();
         if (bullet != null)
         {
