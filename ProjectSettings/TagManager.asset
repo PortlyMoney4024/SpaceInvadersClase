@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - PlayerShot
+  - Enemy
+  - Muro
   layers:
   - Default
   - TransparentFX

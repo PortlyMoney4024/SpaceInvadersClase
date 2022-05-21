@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    //public GameObject bullet;
+    public Transform posSpawn;
+    public int separacion;
+    public static EnemyBehaviour respawn;
+
     void Start()
     {
         StartCoroutine(enemyShoot());
+        SpawnearEnemigos();
+
+        posSpawn = GetComponent<Transform>();
     }
 
     IEnumerator enemyShoot()
@@ -29,6 +35,31 @@ public class EnemyBehaviour : MonoBehaviour
             bullet.transform.position = this.transform.position;
             bullet.transform.rotation = this.transform.rotation;
             bullet.SetActive(true);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("PlayerShot"))
+        {
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
+
+            GameManager.sharedInstance.DamageEnemies();
+
+            collision.gameObject.SetActive(false);
+        }
+    }
+
+    public void SpawnearEnemigos()
+    {
+        GameObject enemigos = ObjectPooler.SharedInstance.ChecarEnemigos();
+        if (enemigos != null)
+        {
+            enemigos.transform.position = new Vector3(posSpawn.position.x, posSpawn.position.y + separacion, -10);
+            enemigos.transform.rotation = this.transform.rotation;
+            enemigos.SetActive(true);
         }
     }
 }

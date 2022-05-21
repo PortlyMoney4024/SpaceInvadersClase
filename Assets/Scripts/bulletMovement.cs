@@ -17,4 +17,19 @@ public class bulletMovement : MonoBehaviour
     {
         
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Muro"))
+        {
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
+        }
+
+        if(collision.CompareTag("PlayerShot"))
+        {
+            gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+        }
+    }
 }

@@ -9,6 +9,14 @@ public class ObjectPooler : MonoBehaviour
     public GameObject objectToPool;
     public int amountToPool;
 
+    public List<GameObject> listaObjetos;
+    public GameObject balas;
+    public int municion;
+    
+    public List<GameObject> listaEnemigos;
+    public GameObject enemigos;
+    public int cantEnemigos;
+
     void Awake()
     {
         SharedInstance = this;
@@ -21,6 +29,26 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = (GameObject)Instantiate(objectToPool);
             obj.SetActive(false);
             pooledObjects.Add(obj);
+        }
+
+        listaObjetos = new List<GameObject>();
+        for (int i = 0; i < municion; i++)
+        {
+            GameObject shot = (GameObject)Instantiate(balas);
+            shot.SetActive(false);
+            listaObjetos.Add(shot);
+        }
+
+        listaEnemigos = new List<GameObject>();
+        for (int i = 0; i < cantEnemigos; i++)
+        {
+            GameObject spawn = (GameObject)Instantiate(enemigos);
+            spawn.SetActive(false);
+            listaObjetos.Add(spawn);
+            if(cantEnemigos == 0)
+            {
+                cantEnemigos += 1;
+            }
         }
     }
 
@@ -41,6 +69,30 @@ public class ObjectPooler : MonoBehaviour
             }
         }
         //3   
+        return null;
+    }
+
+    public GameObject ContarBalas()
+    {
+        for (int i = 0; i < listaObjetos.Count; i++)
+        {
+            if (!listaObjetos[i].activeInHierarchy)
+            {
+                return listaObjetos[i];
+            }
+        }  
+        return null;
+    }
+
+    public GameObject ChecarEnemigos()
+    {
+        for (int i = 0; i < listaEnemigos.Count; i++)
+        {
+            if (!listaEnemigos[i].activeInHierarchy)
+            {
+                return listaEnemigos[i];
+            }
+        }
         return null;
     }
 }

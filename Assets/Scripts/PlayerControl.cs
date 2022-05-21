@@ -8,6 +8,9 @@ public class PlayerControl : MonoBehaviour
     float movX;
     public float speed;
 
+    public Transform firePoint;
+    public GameObject bala;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -15,6 +18,13 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         movX = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Instantiate(bala, firePoint.position, Quaternion.identity);
+            //PlayerShot.disparar.Shot();
+            Shot();
+        }
     }
     private void FixedUpdate()
     {
@@ -29,6 +39,17 @@ public class PlayerControl : MonoBehaviour
             collision.gameObject.SetActive(false);
             //Mando llamar el GM y sus funciones publicas desde cualquier script
             GameManager.sharedInstance.TakeDamage();
+        }
+    }
+
+    public void Shot()
+    {
+        GameObject bala = ObjectPooler.SharedInstance.ContarBalas();
+        if (bala != null)
+        {
+            bala.transform.position = this.transform.position;
+            bala.transform.rotation = this.transform.rotation;
+            bala.SetActive(true);
         }
     }
 }
